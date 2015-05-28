@@ -225,6 +225,7 @@ namespace EloFactory_Cassiopeia
             Drawing.OnDraw += Drawing_OnDraw;
             Obj_AI_Base.OnProcessSpellCast += Obj_AI_Base_OnProcessSpellCast;
             AntiGapcloser.OnEnemyGapcloser += AntiGapcloser_OnEnemyGapcloser;
+            CustomEvents.Unit.OnDash += Unit_OnDash;
 
 
         }
@@ -421,6 +422,54 @@ namespace EloFactory_Cassiopeia
                 R.Cast(gapcloser.Sender.ServerPosition, true);
             }
 
+        }
+        #endregion
+
+        #region On Dash
+        static void Unit_OnDash(Obj_AI_Base sender, Dash.DashItem args)
+        {
+            var useQ = Config.Item("Cassiopeia.UseQCombo").GetValue<bool>();
+            var useW = Config.Item("Cassiopeia.UseWCombo").GetValue<bool>();
+
+            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
+
+            if (!sender.IsEnemy || !target.IsValidTarget()) return;
+
+            if (useW && W.IsReady() && Player.Mana >= WMANA)
+            {
+                if (sender.BaseSkinName.Equals("LeBlanc", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    W.Cast(args.StartPos.Distance(Player) < W.Range ? args.StartPos : args.EndPos);
+                    lastCastW = Environment.TickCount;
+                    return;
+                }
+                var delay = (int)(args.EndTick - Game.Time - W.Delay - 0.1f);
+                if (delay > 0)
+                {
+                    Utility.DelayAction.Add(delay * 1000, () => W.Cast(args.EndPos));
+                    lastCastW = Environment.TickCount;
+                }
+                else
+                {
+                    W.Cast(args.EndPos);
+                    lastCastW = Environment.TickCount;
+                }
+            }
+
+            if (useQ && Q.IsReady() && Player.Mana >= QMANA)
+            {
+                var delay = (int)(args.EndTick - Game.Time - Q.Delay - 0.1f);
+                if (delay > 0)
+                {
+                    Utility.DelayAction.Add(delay * 1000, () => Q.Cast(args.EndPos));
+                    lastCastQ = Environment.TickCount;
+                }
+                else
+                {
+                    Q.Cast(args.EndPos);
+                    lastCastQ = Environment.TickCount;
+                }
+            }
         }
         #endregion
 
