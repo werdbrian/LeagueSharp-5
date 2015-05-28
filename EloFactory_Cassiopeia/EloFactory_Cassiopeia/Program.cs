@@ -1518,7 +1518,7 @@ namespace EloFactory_Cassiopeia
             if (E.IsReady() && useE && (Environment.TickCount - lastCastE) >= Config.Item("Cassiopeia.EDelayLaneClear").GetValue<Slider>().Value)
             {
 
-                MinionCount = MinionManager.GetMinions(Player.ServerPosition, E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth);
+                MinionCount = MinionManager.GetMinions(Player.ServerPosition, E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.Health);
 
                 foreach (var minion in MinionCount.Where(x => Config.Item("Cassiopeia.UseELastHitLaneClearNoPoisoned").GetValue<bool>() || x.HasBuffOfType(BuffType.Poison)))
                 {
