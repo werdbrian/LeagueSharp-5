@@ -433,41 +433,97 @@ namespace EloFactory_Cassiopeia
 
             if (!sender.IsEnemy) return;
 
-            if (useW && W.IsReady() && Player.Mana >= WMANA)
+            if (Player.CountEnemiesInRange(1200) == 1)
             {
-                if (sender.BaseSkinName.Equals("LeBlanc", StringComparison.CurrentCultureIgnoreCase))
+                if (useW && W.IsReady() && Player.Mana >= WMANA)
                 {
-                    W.Cast(args.StartPos.Distance(Player) < W.Range ? args.StartPos : args.EndPos);
-                    lastCastW = Environment.TickCount;
-                    return;
+                    if (sender.BaseSkinName.Equals("LeBlanc", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        W.Cast(args.StartPos.Distance(Player) < W.Range ? args.StartPos : args.EndPos);
+                        lastCastW = Environment.TickCount;
+                        return;
+                    }
+                    var delay = (int)(args.EndTick - Game.Time - W.Delay - 0.1f);
+                    if (delay > 0)
+                    {
+                        Utility.DelayAction.Add(delay * 1000, () => W.Cast(args.EndPos));
+                        lastCastW = Environment.TickCount;
+                    }
+                    else
+                    {
+                        W.Cast(args.EndPos);
+                        lastCastW = Environment.TickCount;
+                    }
                 }
-                var delay = (int)(args.EndTick - Game.Time - W.Delay - 0.1f);
-                if (delay > 0)
+
+                if (useQ && Q.IsReady() && Player.Mana >= QMANA)
                 {
-                    Utility.DelayAction.Add(delay * 1000, () => W.Cast(args.EndPos));
-                    lastCastW = Environment.TickCount;
-                }
-                else
-                {
-                    W.Cast(args.EndPos);
-                    lastCastW = Environment.TickCount;
+                    var delay = (int)(args.EndTick - Game.Time - Q.Delay - 0.1f);
+                    if (delay > 0)
+                    {
+                        Utility.DelayAction.Add(delay * 1000, () => Q.Cast(args.EndPos));
+                        lastCastQ = Environment.TickCount;
+                    }
+                    else
+                    {
+                        Q.Cast(args.EndPos);
+                        lastCastQ = Environment.TickCount;
+                    }
                 }
             }
 
-            if (useQ && Q.IsReady() && Player.Mana >= QMANA)
+            if (Player.CountEnemiesInRange(1200) > 1)
             {
-                var delay = (int)(args.EndTick - Game.Time - Q.Delay - 0.1f);
-                if (delay > 0)
+                if (useW && W.IsReady() && Player.Mana >= WMANA)
                 {
-                    Utility.DelayAction.Add(delay * 1000, () => Q.Cast(args.EndPos));
-                    lastCastQ = Environment.TickCount;
+
+                    if (sender.BaseSkinName.Equals("LeBlanc", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        W.Cast(args.StartPos.Distance(Player) < W.Range ? args.StartPos : args.EndPos);
+                        lastCastW = Environment.TickCount;
+                        return;
+                    }
+
+                    if (sender.HasBuffOfType(BuffType.Poison) || Environment.TickCount - lastCastQ < 1000)
+                    {
+                        return;
+                    }
+
+                    var delay = (int)(args.EndTick - Game.Time - W.Delay - 0.1f);
+                    if (delay > 0)
+                    {
+                        Utility.DelayAction.Add(delay * 1000, () => W.Cast(args.EndPos));
+                        lastCastW = Environment.TickCount;
+                    }
+                    else
+                    {
+                        W.Cast(args.EndPos);
+                        lastCastW = Environment.TickCount;
+                    }
                 }
-                else
+
+                if (useQ && Q.IsReady() && Player.Mana >= QMANA)
                 {
-                    Q.Cast(args.EndPos);
-                    lastCastQ = Environment.TickCount;
+                    if (sender.HasBuffOfType(BuffType.Poison) || (Environment.TickCount - lastCastW < 1000 && sender.BaseSkinName != "LeBlanc"))
+                    {
+                        return;
+                    }
+
+                    var delay = (int)(args.EndTick - Game.Time - Q.Delay - 0.1f);
+                    if (delay > 0)
+                    {
+                        Utility.DelayAction.Add(delay * 1000, () => Q.Cast(args.EndPos));
+                        lastCastQ = Environment.TickCount;
+                    }
+                    else
+                    {
+                        Q.Cast(args.EndPos);
+                        lastCastQ = Environment.TickCount;
+                    }
                 }
             }
+
+            
         }
         #endregion
 
