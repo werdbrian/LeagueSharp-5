@@ -431,9 +431,7 @@ namespace EloFactory_Cassiopeia
             var useQ = Config.Item("Cassiopeia.UseQCombo").GetValue<bool>();
             var useW = Config.Item("Cassiopeia.UseWCombo").GetValue<bool>();
 
-            var target = TargetSelector.GetTarget(Q.Range, TargetSelector.DamageType.Magical);
-
-            if (!sender.IsEnemy || !target.IsValidTarget()) return;
+            if (!sender.IsEnemy) return;
 
             if (useW && W.IsReady() && Player.Mana >= WMANA)
             {
