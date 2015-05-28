@@ -1448,7 +1448,7 @@ namespace EloFactory_Cassiopeia
 
             if (useE && E.IsReady() && (Environment.TickCount - lastCastE) >= Config.Item("Cassiopeia.EDelayLastHit").GetValue<Slider>().Value)
             {
-                MinionCount = MinionManager.GetMinions(Player.ServerPosition, E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.Health);
+                MinionCount = MinionManager.GetMinions(Player.ServerPosition, E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth);
                 foreach (var minion1 in MinionCount.Where(x => Config.Item("Cassiopeia.UseELastHitNoPoisoned").GetValue<bool>() || x.HasBuffOfType(BuffType.Poison)))
                 {
                     var buffEndTime = Config.Item("Cassiopeia.UseELastHitNoPoisoned").GetValue<bool>() ? float.MaxValue : GetPoisonBuffTimer(minion1);
@@ -1518,7 +1518,7 @@ namespace EloFactory_Cassiopeia
             if (E.IsReady() && useE && (Environment.TickCount - lastCastE) >= Config.Item("Cassiopeia.EDelayLaneClear").GetValue<Slider>().Value)
             {
 
-                MinionCount = MinionManager.GetMinions(Player.ServerPosition, E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.Health);
+                MinionCount = MinionManager.GetMinions(Player.ServerPosition, E.Range, MinionTypes.All, MinionTeam.Enemy, MinionOrderTypes.MaxHealth);
 
                 foreach (var minion in MinionCount.Where(x => Config.Item("Cassiopeia.UseELastHitLaneClearNoPoisoned").GetValue<bool>() || x.HasBuffOfType(BuffType.Poison)))
                 {
