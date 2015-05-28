@@ -250,12 +250,6 @@ namespace EloFactory_Ekko
                 }
                 #endregion
 
-                #region Sort E combo mode
-                if (useE && E.IsReady() && Player.Mana >= EMANA && Player.Distance(target) > 260 && Player.Distance(target) <= E.Range + 450)
-                {
-                    E.Cast(target.ServerPosition, true);
-                }
-                #endregion
 
                 #region Sort Q combo mode
                 if (useQ && Q.IsReady() && Player.Mana >= QMANA && Player.Distance(target) <= Q.Range)
@@ -263,7 +257,17 @@ namespace EloFactory_Ekko
                     Q.CastIfHitchanceEquals(target, HitChance.High, true);
                 }
                 #endregion
-
+                
+                
+                #region Sort E combo mode
+                if (useE && E.IsReady() && Player.Mana >= EMANA && Player.Distance(target) > 260 && Player.Distance(target) <= E.Range + 450)
+                {
+                    E.Cast(target.ServerPosition, true);
+                }
+                #endregion
+                
+                
+                
                 #region Sort W combo mode
                 if (useW && W.IsReady() && Player.Mana >= WMANA && Player.Distance(target) < E.Range + 450 + 200)
                 {
@@ -332,7 +336,7 @@ namespace EloFactory_Ekko
 
                 if (allMinionsQ.Any())
                 {
-                    var farmAll = Q.GetLineFarmLocation(allMinionsQ, Q.Width);
+                    var farmAll = Q.GetLineFarmLocation(allMinionsQ, 200);
                     if (farmAll.MinionsHit >= Config.Item("Ekko.QLaneClearCount").GetValue<Slider>().Value)
                     {
                         Q.Cast(farmAll.Position, true);
@@ -375,7 +379,7 @@ namespace EloFactory_Ekko
             {
                 var allMonsterQ = MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
 
-                var farmAll = Q.GetLineFarmLocation(allMonsterQ, Q.Width);
+                var farmAll = Q.GetLineFarmLocation(allMonsterQ, 200);
                 if (farmAll.MinionsHit >= 1)
                 {
                     Q.Cast(farmAll.Position, true);
