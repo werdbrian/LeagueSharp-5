@@ -56,7 +56,7 @@ namespace EloFactory_Ekko
 
             if (Player.ChampionName != ChampionName) return;
 
-            Q = new Spell(SpellSlot.Q, 750f);
+            Q = new Spell(SpellSlot.Q, 1200f);
             W = new Spell(SpellSlot.W, 1620f);
             E = new Spell(SpellSlot.E, 400f);
             R = new Spell(SpellSlot.R, 450f);
