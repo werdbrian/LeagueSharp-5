@@ -336,8 +336,8 @@ namespace EloFactory_Ekko
 
                 if (allMinionsQ.Any())
                 {
-                    var farmAll = Q.GetLineFarmLocation(allMinionsQ, 200);
-                    if (farmAll.MinionsHit >= Config.Item("Ekko.QLaneClearCount").GetValue<Slider>().Value)
+                    var farmAll = Q.GetLineFarmLocation(allMinionsQ, 400);
+                    if (farmAll.MinionsHit >= 2)
                     {
                         Q.Cast(farmAll.Position, true);
                     }
@@ -351,7 +351,7 @@ namespace EloFactory_Ekko
                 if (allMinionsW.Any())
                 {
                     var farmAll = Q.GetCircularFarmLocation(allMinionsW, 350);
-                    if (farmAll.MinionsHit >= Config.Item("Ekko.WLaneClearCount").GetValue<Slider>().Value)
+                    if (farmAll.MinionsHit >= 2)
                     {
                         W.Cast(farmAll.Position, true);
                     }
@@ -379,7 +379,7 @@ namespace EloFactory_Ekko
             {
                 var allMonsterQ = MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
 
-                var farmAll = Q.GetLineFarmLocation(allMonsterQ, 200);
+                var farmAll = Q.GetLineFarmLocation(allMonsterQ, 400);
                 if (farmAll.MinionsHit >= 1)
                 {
                     Q.Cast(farmAll.Position, true);
