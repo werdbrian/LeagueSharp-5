@@ -354,7 +354,7 @@ namespace EloFactory_Ekko
                 if (allMinionsW.Any())
                 {
                     var farmAll = Q.GetCircularFarmLocation(allMinionsW, 350);
-                    if (farmAll.MinionsHit >= 2)
+                    if (farmAll.MinionsHit >= 3)
                     {
                         W.Cast(farmAll.Position, true);
                     }
