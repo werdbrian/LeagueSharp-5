@@ -72,7 +72,7 @@ namespace EloFactory_Ekko
             SpellList.Add(E);
             SpellList.Add(R);
 
-            abilitySequence = new int[] { 1, 3, 1, 2, 1, 4, 1, 3, 1, 3, 4, 3, 3, 2, 2, 4, 2, 2 };
+            abilitySequence = new int[] { 1, 2, 3, 1, 1, 4, 1, 3, 1, 3, 4, 3, 3, 2, 2, 4, 2, 2 };
 
             Config = new Menu(ChampionName + " By LuNi", ChampionName + " By LuNi", true);
 
