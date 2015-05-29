@@ -269,7 +269,7 @@ namespace EloFactory_Ekko
                 
                 
                 #region Sort W combo mode
-                if (useW && W.IsReady() && Player.Mana >= WMANA && Player.Distance(target) < Q.Range)
+                if (!Q.IsReady() && useW && W.IsReady() && Player.Mana >= WMANA && Player.Distance(target) < Q.Range)
                 {
                   //  W.Cast(target, true);
               //     W.CastIfHitchanceEquals(target, HitChance.High, true);
@@ -333,7 +333,7 @@ namespace EloFactory_Ekko
             var QMinMana = Config.Item("Ekko.QMiniManaLaneClear").GetValue<Slider>().Value;
             var WMinMana = Config.Item("Ekko.WMiniManaLaneClear").GetValue<Slider>().Value;
 
-            if (useQ && Q.IsReady() && Player.Mana >= QMANA && Player.ManaPercent >= QMinMana)
+            if (Q.IsReady() )
             {
                 var allMinionsQ = MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.Enemy);
 
@@ -347,14 +347,14 @@ namespace EloFactory_Ekko
                 }
             }
 
-            if (useW && W.IsReady() && Player.Mana >= WMANA && Player.ManaPercent >= WMinMana)
+            if ( W.IsReady() )
             {
                 var allMinionsW = MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.Enemy);
 
                 if (allMinionsW.Any())
                 {
                     var farmAll = Q.GetCircularFarmLocation(allMinionsW, 350);
-                    if (farmAll.MinionsHit >= 3)
+                    if (farmAll.MinionsHit >= 2)
                     {
                         W.Cast(farmAll.Position, true);
                     }
@@ -378,7 +378,7 @@ namespace EloFactory_Ekko
 
             if (Config.Item("Ekko.SafeJungleClear").GetValue<bool>() && Player.CountEnemiesInRange(1500) > 0) return;
 
-            if (useQ && Q.IsReady() && Player.Mana >= QMANA && Player.ManaPercent >= QMinMana)
+            if ( Q.IsReady())
             {
                 var allMonsterQ = MinionManager.GetMinions(Player.Position, Q.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
 
@@ -389,7 +389,7 @@ namespace EloFactory_Ekko
                 }
             }
 
-            if (useW && W.IsReady() && Player.Mana >= WMANA && Player.ManaPercent >= WMinMana)
+            if ( W.IsReady() )
             {
                 var allMonsterW = MinionManager.GetMinions(Player.Position, W.Range, MinionTypes.All, MinionTeam.Neutral, MinionOrderTypes.MaxHealth);
 
