@@ -252,7 +252,7 @@ namespace EloFactory_Ekko
 
 
                 #region Sort Q combo mode
-                if ( Q.IsReady() && Player.Mana >= QMANA && Player.Distance(target) <= Q.Range)
+                if ( Q.IsReady())
                 {
                     Q.CastIfHitchanceEquals(target, HitChance.High, true);
                 }
