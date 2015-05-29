@@ -260,7 +260,7 @@ namespace EloFactory_Ekko
                 
                 
                 #region Sort E combo mode
-                if (useE && E.IsReady() && Player.Mana >= EMANA && Player.Distance(target) > 260 && Player.Distance(target) <= E.Range + 450)
+                if (!Q.IsReady() && E.IsReady() && Player.Mana >= EMANA && Player.Distance(target) > 260 && Player.Distance(target) <= E.Range + 450)
                 {
                     E.Cast(target.ServerPosition, true);
                 }
