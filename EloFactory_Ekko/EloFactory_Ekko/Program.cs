@@ -269,10 +269,10 @@ namespace EloFactory_Ekko
                 
                 
                 #region Sort W combo mode
-                if (useW && W.IsReady() && Player.Mana >= WMANA && Player.Distance(target) < E.Range + 450 + 200)
+                if (useW && W.IsReady() && Player.Mana >= WMANA && Player.Distance(target) < Q.Range)
                 {
                   //  W.Cast(target, true);
-                   W.CastIfHitchanceEquals(target, HitChance.High, true);
+              //     W.CastIfHitchanceEquals(target, HitChance.High, true);
                     W.CastIfHitchanceEquals(target, HitChance.VeryHigh, true);
                     W.CastIfHitchanceEquals(target, HitChance.Immobile, true);
                 }
