@@ -271,9 +271,9 @@ namespace EloFactory_Ekko
                 #region Sort W combo mode
                 if (!Q.IsReady() && W.IsReady() && Player.Distance(target) < Q.Range)
                 {
-                  //  W.Cast(target, true);
+                    W.Cast(target, true);
               //     W.CastIfHitchanceEquals(target, HitChance.High, true);
-                    W.CastIfHitchanceEquals(target, HitChance.VeryHigh, true);
+                  //  W.CastIfHitchanceEquals(target, HitChance.VeryHigh, true);
                     W.CastIfHitchanceEquals(target, HitChance.Immobile, true);
                 }
                 #endregion
