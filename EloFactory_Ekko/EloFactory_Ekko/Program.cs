@@ -244,7 +244,7 @@ namespace EloFactory_Ekko
 
                 #region Sort R combo mode
                 
-                if (useR && R.IsReady() && Player.HealthPercent <= Config.Item("Ekko.MiniHPR").GetValue<Slider>().Value)
+                if (R.IsReady() && Player.HealthPercent <= Config.Item("Ekko.MiniHPR").GetValue<Slider>().Value)
                 {
                     R.Cast();
                 }
@@ -252,7 +252,7 @@ namespace EloFactory_Ekko
 
 
                 #region Sort Q combo mode
-                if (useQ && Q.IsReady() && Player.Mana >= QMANA && Player.Distance(target) <= Q.Range)
+                if ( Q.IsReady() && Player.Mana >= QMANA && Player.Distance(target) <= Q.Range)
                 {
                     Q.CastIfHitchanceEquals(target, HitChance.High, true);
                 }
@@ -260,7 +260,7 @@ namespace EloFactory_Ekko
                 
                 
                 #region Sort E combo mode
-                if (!Q.IsReady() && E.IsReady() && Player.Mana >= EMANA && Player.Distance(target) > 260 && Player.Distance(target) <= E.Range + 450)
+                if (!Q.IsReady() && E.IsReady() && Player.Distance(target) > 260 && Player.Distance(target) <= E.Range + 450)
                 {
                     E.Cast(target.ServerPosition, true);
                 }
@@ -269,7 +269,7 @@ namespace EloFactory_Ekko
                 
                 
                 #region Sort W combo mode
-                if (!Q.IsReady() && useW && W.IsReady() && Player.Mana >= WMANA && Player.Distance(target) < Q.Range)
+                if (!Q.IsReady() && W.IsReady() && Player.Distance(target) < Q.Range)
                 {
                   //  W.Cast(target, true);
               //     W.CastIfHitchanceEquals(target, HitChance.High, true);
